@@ -15,12 +15,13 @@
 
 // Alias the loading bar for various backwards compatibilities since the project has matured:
 angular.module('chieffancypants.draggableBg', [])
-  .directive('draggableBg', function ($document) {
+  .directive('draggableBg', function ($document, $rootScope) {
     return {
       scope: {
         'imgSrc': '=draggableBg',
-        'displayPosX': '=draggableBgX',
-        'displayPosY': '=draggableBgY'
+        'displayPosX': '=?draggableBgX',
+        'displayPosY': '=?draggableBgY',
+        'realTimeUpdate': '@draggableBgRealtime',
       },
       link: function (scope, element) {
         var startX = 0;
@@ -31,7 +32,13 @@ angular.module('chieffancypants.draggableBg', [])
         var imageDimensions = { width: 0, height: 0 };
         var image = new Image();
 
-        element.css('background-image', 'url(' + scope.imgSrc + ')');
+        // rerun all this if imgSrc changes.  Particularly useful when imgSrc
+        // is only set after some kind of XHR comes back
+        scope.$watch('imgSrc', function (newVal) {
+          element.css('background-image', 'url(' + newVal + ')');
+          element.addClass('draggable-bg');
+          setImageDimensions();
+        });
 
         element.on('mousedown', function (event) {
           event.preventDefault();
@@ -39,22 +46,6 @@ angular.module('chieffancypants.draggableBg', [])
           startY = event.pageY - y;
           $document.on('mousemove', mousemove);
           $document.on('mouseup', mouseup);
-        });
-
-        // scope.$watchCollection('moment', function (newVal, oldVal) {
-        //   setImageDimensions();
-        //
-        //   // if the size changed, reset the bg display position:
-        //   if (newVal.display_size_w !== oldVal.display_size_w || newVal.display_size_h !== oldVal.display_size_h) {
-        //     newVal.display_pos_x = null;
-        //     newVal.display_pos_y = null;
-        //   }
-        //   setBgPos(scope.moment, element);
-        // });
-
-        scope.$evalAsync(function () {
-          setImageDimensions();
-          // setBgPos(image, element);
         });
 
         // when the image is loaded, grab the dimensions
@@ -100,16 +91,23 @@ angular.module('chieffancypants.draggableBg', [])
           x = scope.displayPosX || Math.round((el.clientWidth - imageDimensions.width) / 2);
           y = scope.displayPosY || Math.round((el.clientHeight - imageDimensions.height) / 2);
           element.css('background-position', x + 'px ' + y + 'px');
+
+          // TODO: only $apply() if the values were changed due to displayPosX/Y
+          // not being set
+          scope.$evalAsync(function () {
+            scope.displayPosX = x;
+            scope.displayPosY = y;
+          });
         }
 
         function limit (low, hi, value, bool) {
           if (arguments.length === 3 || bool) {
             if (value < low) {
-              return Math.floor(low);
+              return Math.ceil(low);
             }
 
             if (value > hi) {
-              return Math.floor(hi);
+              return Math.ceil(hi);
             }
           }
           return value;
@@ -128,7 +126,9 @@ angular.module('chieffancypants.draggableBg', [])
 
           scope.displayPosX = x;
           scope.displayPosY = y;
-          console.log(scope.displayPosY);
+          if (scope.$eval(scope.realTimeUpdate)) {
+            scope.$apply();
+          }
         }
 
         function mouseup () {
@@ -136,7 +136,8 @@ angular.module('chieffancypants.draggableBg', [])
           $document.off('mouseup', mouseup);
 
           // update the parent scope to reflect new background position:
-          scope.$digest();
+          scope.$apply();
+          $rootScope.$emit('draggableBg:repositioned', {x: scope.displayPosX, y: scope.displayPosY});
         }
       }
     };

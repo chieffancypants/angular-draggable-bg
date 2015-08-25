@@ -1,0 +1,9 @@
+/*! 
+ * draggable-bg v1.0.0-beta1
+ * https://github.com/chieffancypants/angular-draggable-bg
+ * Copyright (c) 2015 Wes Cruver
+ * License: MIT
+ */
+.draggable-bg {
+  cursor: move;
+}

@@ -2,11 +2,11 @@
 <html>
   <head>
     <!-- angular -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
 
     <!-- loadingbar -->
     <script src="../src/draggable-bg.js"></script>
+    <link href="../build/draggable-bg.css" rel='stylesheet' />
 
     <!-- example app -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
@@ -33,13 +33,19 @@
       <div class="example e2"
         draggable-bg="anotherImage.url"
         draggable-bg-x="anotherImage.posX"
-        draggable-bg-y="anotherImage.posY">
+        draggable-bg-y="anotherImage.posY"
+        draggable-bg-realtime="true">
+        <h2>X: {{ anotherImage.posX }}</h2>
+        <h2>Y: {{ anotherImage.posY }}</h2>
       </div>
 
       <div class="example"
         ng-repeat="image in images"
         draggable-bg="image.url"
-        draggable-bg-x="image.posX">
+        draggable-bg-x="image.posX"
+        draggable-bg-y="image.posY">
+        <h2>X: {{ image.posX }}</h2>
+        <h2>Y: {{ image.posY }}</h2>
       </div>
 
 

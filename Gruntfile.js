@@ -23,6 +23,19 @@ module.exports = function(grunt) {
       }
     },
 
+
+    cssmin: {
+      options: {
+        banner: '<%= banner %>',
+        report: 'gzip'
+      },
+      minify: {
+        src: 'src/draggable-bg.css',
+        dest: 'build/draggable-bg.min.css'
+      }
+    },
+
+
     karma: {
       unit: {
         configFile: 'test/karma-angular-1.2.conf.js',
@@ -64,6 +77,7 @@ module.exports = function(grunt) {
         },
         files: {
           'build/draggable-bg.js':  'src/draggable-bg.js',
+          'build/draggable-bg.css':  'src/draggable-bg.css',
         }
       }
     }
@@ -71,10 +85,11 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'uglify', 'concat:build']);
+  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'uglify', 'cssmin', 'concat:build']);
   grunt.registerTask('test', ['karma:watch']);
   grunt.registerTask('build', ['default']);
 
