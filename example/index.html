@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- angular -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-animate.min.js"></script>
+
+    <!-- loadingbar -->
+    <script src="../src/draggable-bg.js"></script>
+
+    <!-- example app -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="app.js"></script>
+    <link href='app.css' rel='stylesheet' />
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:300,400,700' rel='stylesheet' type='text/css'>
+  </head>
+
+  <body ng-app="draggableBgExample" ng-controller="ExampleCtrl">
+    <!-- <div class="jumbotron">
+      <h1>Angular Draggable Backgrounds</h1>
+      <p>Drag your background-images around<small> A simple way to allow your users to position images to their liking</small></p>
+      <p>
+        <a href="https://github.com/chieffancypants/angular-draggable-bg" class="btn btn-primary btn-lg">
+          <i class="glyphicon glyphicon-download"></i>&nbsp;&nbsp;Download
+        </a>
+        <a href="https://github.com/chieffancypants/angular-draggable-bg" class="btn btn-default btn-lg">
+          <i class="glyphicon glyphicon-random"></i>&nbsp;&nbsp;Fork on GitHub
+        </a>
+      </p>
+    </div> -->
+
+    <div class="examples">
+      <div class="example" draggable-bg draggable-bg-x="-500" style="background-image: url(http://c2.staticflickr.com/6/5695/20824517862_866a0bb7c1_h.jpg);"></div>
+      <div class="example e2" draggable-bg style="background-image: url(http://c2.staticflickr.com/6/5767/20810643016_fd4af72a49_b.jpg);"></div>
+      <div class="example e3" draggable-bg style="background-image: url(http://c1.staticflickr.com/1/620/20660927439_c282c95dc2_h.jpg);"></div>
+    </div>
+
+  </body>
+</html>
