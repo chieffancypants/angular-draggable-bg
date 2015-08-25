@@ -70,8 +70,8 @@ footer.navbar {
 
 .example {
   background-size: cover;
-  width: 400px;
-  height: 800px;
+  width: 35%;
+  height: 400px;
   overflow: hidden;
   float: left;
   margin: 25px;
@@ -79,11 +79,8 @@ footer.navbar {
 
 .example.e2 {
   height: 200px;
-  width: 400px;
-}
-.example.e3 {
-  background-size:auto;
-  height: 600px;
+  width: 100%;
+  background-size: auto;
 }
 
 

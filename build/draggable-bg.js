@@ -1,3 +1,9 @@
+/*! 
+ * draggable-bg v1.0.0
+ * https://github.com/chieffancypants/draggable-bg
+ * Copyright (c) 2015 Wes Cruver
+ * License: MIT
+ */
 /*
  * angular-draggable-bg
  *

@@ -18,19 +18,8 @@ module.exports = function(grunt) {
         report: 'gzip'
       },
       build: {
-        src: 'src/loading-bar.js',
-        dest: 'build/loading-bar.min.js'
-      }
-    },
-
-    cssmin: {
-      options: {
-        banner: '<%= banner %>',
-        report: 'gzip'
-      },
-      minify: {
-        src: 'src/loading-bar.css',
-        dest: 'build/loading-bar.min.css'
+        src: 'src/draggable-bg.js',
+        dest: 'build/draggable-bg.min.js'
       }
     },
 
@@ -74,7 +63,6 @@ module.exports = function(grunt) {
           banner: '<%= banner %>'
         },
         files: {
-          'build/draggable-bg.css': 'src/draggable-bg.css',
           'build/draggable-bg.js':  'src/draggable-bg.js',
         }
       }
@@ -83,11 +71,10 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'uglify', 'cssmin', 'concat:build']);
+  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'uglify', 'concat:build']);
   grunt.registerTask('test', ['karma:watch']);
   grunt.registerTask('build', ['default']);
 

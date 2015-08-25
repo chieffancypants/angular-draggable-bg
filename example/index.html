@@ -30,9 +30,19 @@
     </div> -->
 
     <div class="examples">
-      <div class="example" draggable-bg draggable-bg-x="-500" style="background-image: url(http://c2.staticflickr.com/6/5695/20824517862_866a0bb7c1_h.jpg);"></div>
-      <div class="example e2" draggable-bg style="background-image: url(http://c2.staticflickr.com/6/5767/20810643016_fd4af72a49_b.jpg);"></div>
-      <div class="example e3" draggable-bg style="background-image: url(http://c1.staticflickr.com/1/620/20660927439_c282c95dc2_h.jpg);"></div>
+      <div class="example e2"
+        draggable-bg="anotherImage.url"
+        draggable-bg-x="anotherImage.posX"
+        draggable-bg-y="anotherImage.posY">
+      </div>
+
+      <div class="example"
+        ng-repeat="image in images"
+        draggable-bg="image.url"
+        draggable-bg-x="image.posX">
+      </div>
+
+
     </div>
 
   </body>
