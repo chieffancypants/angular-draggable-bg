@@ -48,10 +48,13 @@ module.exports = function(grunt) {
       unit13: {
         configFile: 'test/karma-angular-1.3.conf.js',
         singleRun: true,
-        coverageReporter: {
+        coverageReporter: [{
           type: 'text',
           dir: 'coverage/'
-        }
+        }, {
+          type: 'html',
+          dir: 'coverage/'
+        }]
       },
       watch: {
         configFile: 'test/karma-angular-1.2.conf.js',

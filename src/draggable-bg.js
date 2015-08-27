@@ -68,7 +68,6 @@ angular.module('chieffancypants.draggableBg', [])
             } else {
               scale = elementWidth / image.width;
             }
-
             imageDimensions.width = image.width * scale;
             imageDimensions.height = image.height * scale;
           } else {
@@ -77,11 +76,12 @@ angular.module('chieffancypants.draggableBg', [])
           }
 
           setBgPos(scope.moment, element);
+          $rootScope.$broadcast('draggableBg:ready', {x: scope.displayPosX, y: scope.displayPosY});
         };
 
         function setImageDimensions () {
           bgSrc = (element.css('background-image').match(/^url\(['"]?(.*?)['"]?\)$/i) || [])[1];
-          element.css('background-image');
+          // element.css('background-image');
           image.src = bgSrc;
         }
 
@@ -94,10 +94,11 @@ angular.module('chieffancypants.draggableBg', [])
 
           // TODO: only $apply() if the values were changed due to displayPosX/Y
           // not being set
-          scope.$evalAsync(function () {
-            scope.displayPosX = x;
-            scope.displayPosY = y;
-          });
+          scope.displayPosX = x;
+          scope.displayPosY = y;
+          // scope.$evalAsync(function () {
+          //
+          // });
         }
 
         function limit (low, hi, value, bool) {

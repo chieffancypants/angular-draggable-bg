@@ -10,6 +10,6 @@ angular.module('draggableBgExample', ['chieffancypants.draggableBg'])
     $scope.anotherImage = { url: 'http://c1.staticflickr.com/1/620/20660927439_c282c95dc2_h.jpg'  };
 
     $rootScope.$on('draggableBg:repositioned', function (event, args) {
-      console.log(args);
+      console.log($scope.images, args);
     })
   });
