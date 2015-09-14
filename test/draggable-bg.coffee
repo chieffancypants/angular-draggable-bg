@@ -31,8 +31,8 @@ describe 'Angular Draggable BG', ->
 
     it 'should center the image by default', ->
       expect(initialImgPosition).toEqual
-        x: -250
-        y: -133
+        x: 50
+        y: 50
 
     it 'should position the image as the user drags', ->
       eventArgs = null
@@ -41,14 +41,14 @@ describe 'Angular Draggable BG', ->
       el.triggerHandler
         type: 'mousedown', pageX: 0, pageY: 0
       $document.triggerHandler
-        type: 'mousemove', pageX: -20, pageY: -30
+        type: 'mousemove', pageX: -20, pageY: -35
       $document.triggerHandler 'mouseup'
 
       scope.$digest()
 
       expect(eventArgs).toEqual
-        x: initialImgPosition.x - 20
-        y: initialImgPosition.y - 30
+        x: 54
+        y: 63.10861423220974
 
     it "should do nothing if the mouse doesn't move", ->
       eventArgs = null
@@ -84,8 +84,8 @@ describe 'Angular Draggable BG', ->
       $document.triggerHandler 'mouseup'
       scope.$digest()
       expect(eventArgs).toEqual
-        x: divSize.w - imgSize.w
-        y: divSize.h - imgSize.h
+        x: 100
+        y: 100
 
   describe 'background-size: cover', ->
 
@@ -113,5 +113,5 @@ describe 'Angular Draggable BG', ->
       scope.$digest()
 
       expect(eventArgs).toEqual
-        x: initialImgPosition.x - 20
-        y: initialImgPosition.y
+        x: 70.04291845493562
+        y: 100

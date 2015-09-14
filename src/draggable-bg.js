@@ -24,12 +24,18 @@ angular.module('chieffancypants.draggableBg', [])
         'realTimeUpdate': '@draggableBgRealtime',
       },
       link: function (scope, element) {
-        var startX = 0;
-        var startY = 0;
-        var x = 0;
-        var y = 0;
+        var startX;
+        var startXP;
+        var xScale;
+
+        var startY;
+        var startYP;
+        var yScale;
+
+        var x = 50;
+        var y = 50;
         var bgSrc;
-        var imageDimensions = { width: 0, height: 0 };
+        var imageDimensions = { width: 0, height: 0, scale: 1 };
         var image = new Image();
 
         // rerun all this if imgSrc changes.  Particularly useful when imgSrc
@@ -42,8 +48,13 @@ angular.module('chieffancypants.draggableBg', [])
 
         element.on('mousedown', function (event) {
           event.preventDefault();
-          startX = event.pageX - x;
-          startY = event.pageY - y;
+          startX = event.pageX;
+          startXP = x;
+          xScale = 100 / ((imageDimensions.width - element[0].clientWidth) || 1);
+
+          startY = event.pageY;
+          startYP = y;
+          yScale = 100 / ((imageDimensions.height - element[0].clientHeight) || 1);
           $document.on('mousemove', mousemove);
           $document.on('mouseup', mouseup);
         });
@@ -61,15 +72,14 @@ angular.module('chieffancypants.draggableBg', [])
           if (bgSize === 'cover') {
             var elementAspectRatio = elementWidth / elementHeight;
             var imageAspectRatio = image.width / image.height;
-            var scale = 1;
 
             if (imageAspectRatio >= elementAspectRatio) {
-              scale = elementHeight / image.height;
+              imageDimensions.scale = elementHeight / image.height;
             } else {
-              scale = elementWidth / image.width;
+              imageDimensions.scale = elementWidth / image.width;
             }
-            imageDimensions.width = image.width * scale;
-            imageDimensions.height = image.height * scale;
+            imageDimensions.width = image.width * imageDimensions.scale;
+            imageDimensions.height = image.height * imageDimensions.scale;
           } else {
             imageDimensions.width = image.width;
             imageDimensions.height = image.height;
@@ -88,9 +98,9 @@ angular.module('chieffancypants.draggableBg', [])
         function setBgPos (img, element) {
           var el = element[0];
           // TODO: Won't work when display_pos_x is 0:
-          x = scope.displayPosX || Math.round((el.clientWidth - imageDimensions.width) / 2);
-          y = scope.displayPosY || Math.round((el.clientHeight - imageDimensions.height) / 2);
-          element.css('background-position', x + 'px ' + y + 'px');
+          x = scope.displayPosX || x;
+          y = scope.displayPosY || y;
+          element.css('background-position', x + '% ' + y + '%');
 
           // TODO: only $apply() if the values were changed due to displayPosX/Y
           // not being set
@@ -115,14 +125,17 @@ angular.module('chieffancypants.draggableBg', [])
         }
 
         function mousemove (event) {
-          y = event.pageY - startY;
-          y = limit(element[0].clientHeight - imageDimensions.height, 0, y, true);
+          var deltaY = startY - event.pageY;
+          y = startYP + (deltaY * yScale);
+          y = limit(0, 100, y, true);
 
-          x = event.pageX - startX;
-          x = limit(element[0].clientWidth - imageDimensions.width, 0, x, true);
+
+          var deltaX = startX - event.pageX;
+          x = startXP + (deltaX * xScale);
+          x = limit(0, 100, x, true);
 
           element.css({
-            backgroundPosition: x + 'px ' + y + 'px'
+            backgroundPosition: x + '% ' + y + '%'
           });
 
           scope.displayPosX = x;
