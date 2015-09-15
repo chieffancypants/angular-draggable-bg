@@ -115,3 +115,32 @@ describe 'Angular Draggable BG', ->
       expect(eventArgs).toEqual
         x: 70.04291845493562
         y: 100
+
+  describe 'when disabled', ->
+
+        beforeEach (done) ->
+          scope.enableDirective = false;
+          el = $compile('<div id="test-el" style="width:' + divSize.w + 'px; height: ' + divSize.h + 'px" draggable-bg="image.url" draggable-bg-enabled="enableDirective"></div>')(scope)
+          document.body.appendChild(el[0])
+          scope.$digest()
+          $rootScope.$on 'draggableBg:ready', (e, args) ->
+            initialImgPosition = args
+            done()
+
+        afterEach ->
+          angular.element(document.getElementById('test-el')).remove()
+
+        it 'should not allow the background image to be dragged/positioned', ->
+          eventArgs = null
+          expect(el.css('background-position')).toBe '50% 50%'
+          $rootScope.$on 'draggableBg:repositioned', (event, args) -> eventArgs = args
+
+          el.triggerHandler
+            type: 'mousedown', pageX: 0, pageY: 0
+          $document.triggerHandler
+            type: 'mousemove', pageX: -20, pageY: -35
+          $document.triggerHandler 'mouseup'
+
+          scope.$digest()
+          expect(eventArgs).toBeNull()
+          expect(el.css('background-position')).toBe '50% 50%'

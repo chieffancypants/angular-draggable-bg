@@ -21,6 +21,7 @@ angular.module('chieffancypants.draggableBg', [])
         'imgSrc': '=draggableBg',
         'displayPosX': '=?draggableBgX',
         'displayPosY': '=?draggableBgY',
+        'enabled': '=?draggableBgEnabled',
         'realTimeUpdate': '@draggableBgRealtime',
       },
       link: function (scope, element) {
@@ -47,6 +48,10 @@ angular.module('chieffancypants.draggableBg', [])
         });
 
         element.on('mousedown', function (event) {
+          if (scope.enabled === false) {
+            return;
+          }
+
           event.preventDefault();
           startX = event.pageX;
           startXP = x;
