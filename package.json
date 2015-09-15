@@ -1,6 +1,6 @@
 {
   "name": "draggable-bg",
-  "version": "1.0.0-beta1",
+  "version": "1.0.0-beta2",
   "description": "Draggable background-images allowing user positioning",
   "main": "index.js",
   "directories": {
