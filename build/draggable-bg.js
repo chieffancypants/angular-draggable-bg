@@ -1,5 +1,5 @@
 /*! 
- * draggable-bg v1.0.0-beta3
+ * draggable-bg v1.0.0-beta4
  * https://github.com/chieffancypants/angular-draggable-bg
  * Copyright (c) 2015 Wes Cruver
  * License: MIT
@@ -21,7 +21,7 @@
 
 // Alias the loading bar for various backwards compatibilities since the project has matured:
 angular.module('chieffancypants.draggableBg', [])
-  .directive('draggableBg', function ($document, $rootScope) {
+  .directive('draggableBg', ['$document', '$rootScope', function ($document, $rootScope) {
     return {
       scope: {
         'imgSrc': '=draggableBg',
@@ -166,6 +166,6 @@ angular.module('chieffancypants.draggableBg', [])
         }
       }
     };
-  });
+  }]);
 
 })();
