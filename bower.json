@@ -1,7 +1,7 @@
 {
   "name": "angular-draggable-bg",
   "main": [
-    "build/draggable-bg.js"
+    "build/draggable-bg.js",
     "build/draggable-bg.css"
   ],
   "ignore": [
