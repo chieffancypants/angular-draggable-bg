@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         report: 'gzip'
       },
       build: {
-        src: 'src/draggable-bg.js',
+        src: 'build/draggable-bg.js',
         dest: 'build/draggable-bg.min.js'
       }
     },
@@ -79,9 +79,21 @@ module.exports = function(grunt) {
           banner: '<%= banner %>'
         },
         files: {
-          'build/draggable-bg.js':  'src/draggable-bg.js',
+          'build/draggable-bg.js':  'build/draggable-bg.js',
           'build/draggable-bg.css':  'src/draggable-bg.css',
         }
+      }
+    },
+
+    ngAnnotate: {
+      options: {
+        singleQuotes: true
+      },
+      source: {
+        expand: true,
+        cwd: 'src',
+        src: ['*.js'],
+        dest: 'build'
       }
     }
   });
@@ -90,9 +102,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'uglify', 'cssmin', 'concat:build']);
+  grunt.registerTask('default', ['jshint', 'karma:unit', 'karma:unit13', 'ngAnnotate', 'uglify', 'cssmin', 'concat:build']);
   grunt.registerTask('test', ['karma:watch']);
   grunt.registerTask('build', ['default']);
 
