@@ -42,9 +42,13 @@ angular.module('chieffancypants.draggableBg', [])
         // rerun all this if imgSrc changes.  Particularly useful when imgSrc
         // is only set after some kind of XHR comes back
         scope.$watch('imgSrc', function (newVal) {
-          element.css('background-image', 'url(' + newVal + ')');
-          element.addClass('draggable-bg');
-          setImageDimensions();
+          if (newVal) {
+            element.css('background-image', 'url(' + newVal + ')');
+            element.addClass('draggable-bg');
+            setImageDimensions();
+          } else {
+            element.css('background-image', 'none');
+          }
         });
 
         element.on('mousedown', function (event) {
